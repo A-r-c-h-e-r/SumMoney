@@ -1,0 +1,144 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\ExpensesPageImages\ArrowIconDown.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\ArrowIconLeft.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\ArrowIconRight.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\AvailableIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\CalendarIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\CheckMarkIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\ChekMarkIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\ClockIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\DeleteIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\DiscretionaryIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\DollarIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\EssentialIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\ImportantIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\ListIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\MinusIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\NoteIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\PlusIcon.png" />
+    <None Remove="Resources\Images\ExpensesPageImages\XIcon.png" />
+    <None Remove="Resources\Images\MainWindowImages\AccountLogo.png" />
+    <None Remove="Resources\Images\MainWindowImages\BellLogo.png" />
+    <None Remove="Resources\Images\MainWindowImages\CalendarLogo.png" />
+    <None Remove="Resources\Images\MainWindowImages\ExpensesLogo.png" />
+    <None Remove="Resources\Images\MainWindowImages\IncomeLogo.png" />
+    <None Remove="Resources\Images\MainWindowImages\OverviewLogo.png" />
+    <None Remove="Resources\Images\MainWindowImages\PersonLogo.png" />
+    <None Remove="Resources\Images\MainWindowImages\SearchLogo.png" />
+    <None Remove="Resources\Images\MainWindowImages\SettingsLogo.png" />
+    <None Remove="Resources\Images\MainWindowImages\TextLogo.png" />
+    <None Remove="Resources\Images\_TEMPLATE_IMAGE_.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\ExpensesPageImages\ArrowIconDown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\ArrowIconLeft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\ArrowIconRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\AvailableIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\CalendarIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\CheckMarkIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\ChekMarkIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\ClockIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\DeleteIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\DiscretionaryIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\DollarIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\EssentialIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\ImportantIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\ListIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\MinusIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\NoteIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\PlusIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ExpensesPageImages\XIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MainWindowImages\Menu\AccountLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MainWindowImages\Header\BellLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MainWindowImages\Menu\CalendarLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MainWindowImages\Menu\ExpensesLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MainWindowImages\Menu\IncomeLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MainWindowImages\Menu\OverviewLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MainWindowImages\Header\SearchLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.SfChart.WPF" Version="19.1.0.55" />
+    <PackageReference Include="Syncfusion.SfGrid.WPF" Version="19.1.0.56" />
+    <PackageReference Include="Syncfusion.SfInput.WPF" Version="19.1.0.55" />
+    <PackageReference Include="Syncfusion.SfTextInputLayout.WPF" Version="19.1.0.55" />
+    <PackageReference Include="Syncfusion.Shared.WPF" Version="19.1.0.56" />
+    <PackageReference Include="Syncfusion.Tools.WPF" Version="19.1.0.54" />
+    <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\MainWindowImages\Header\PersonLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MainWindowImages\Menu\SettingsLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MainWindowImages\Info\TextLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\_TEMPLATE_IMAGE_.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>

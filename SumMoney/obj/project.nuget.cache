@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "dgSpecHash": "8STYRWI5fJvsG3OxqXUoN/4BjTPHfOZn7UL2iXE9opte+XXJ2NHgwU8S6JplCKl98/iGrStpylE3OF6fDzC2Yg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Klover\\source\\repos\\SumMoney\\SumMoney\\SumMoney.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Klover\\.nuget\\packages\\syncfusion.data.wpf\\19.1.0.56\\syncfusion.data.wpf.19.1.0.56.nupkg.sha512",
+    "C:\\Users\\Klover\\.nuget\\packages\\syncfusion.licensing\\19.1.0.56\\syncfusion.licensing.19.1.0.56.nupkg.sha512",
+    "C:\\Users\\Klover\\.nuget\\packages\\syncfusion.sfchart.wpf\\19.1.0.55\\syncfusion.sfchart.wpf.19.1.0.55.nupkg.sha512",
+    "C:\\Users\\Klover\\.nuget\\packages\\syncfusion.sfgrid.wpf\\19.1.0.56\\syncfusion.sfgrid.wpf.19.1.0.56.nupkg.sha512",
+    "C:\\Users\\Klover\\.nuget\\packages\\syncfusion.sfinput.wpf\\19.1.0.55\\syncfusion.sfinput.wpf.19.1.0.55.nupkg.sha512",
+    "C:\\Users\\Klover\\.nuget\\packages\\syncfusion.sftextinputlayout.wpf\\19.1.0.55\\syncfusion.sftextinputlayout.wpf.19.1.0.55.nupkg.sha512",
+    "C:\\Users\\Klover\\.nuget\\packages\\syncfusion.shared.wpf\\19.1.0.56\\syncfusion.shared.wpf.19.1.0.56.nupkg.sha512",
+    "C:\\Users\\Klover\\.nuget\\packages\\syncfusion.tools.wpf\\19.1.0.54\\syncfusion.tools.wpf.19.1.0.54.nupkg.sha512",
+    "C:\\Users\\Klover\\.nuget\\packages\\system.windows.interactivity.wpf\\2.0.20525\\system.windows.interactivity.wpf.2.0.20525.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Пакет \"System.Windows.Interactivity.WPF 2.0.20525\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8\", а не целевой платформы проекта \"net5.0-windows7.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "libraryId": "System.Windows.Interactivity.WPF",
+      "targetGraphs": [
+        "net5.0-windows7.0"
+      ]
+    }
+  ]
+}

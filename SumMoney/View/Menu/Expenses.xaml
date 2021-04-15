@@ -1,0 +1,1449 @@
+﻿<Page x:Class="SumMoney.View.Menu.Expenses"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SumMoney.View.Menu"
+      xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
+      xmlns:viewmodel="clr-namespace:SumMoney.ViewModel" 
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+      xmlns:local1="clr-namespace:SumMoney.Model"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="800"
+      Title="Expenses" Background="{DynamicResource DarkMainColor}" >
+
+    <Page.DataContext>
+        <viewmodel:MainViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <local1:CustomDueDateCellTemplateSelector x:Key="DueDateTemplateSelector"/>
+        <local1:CustomStatusCellTemplateSelector x:Key="StatusTemplateSelector"/>
+        <local1:TypeTemplateSelector x:Key="TypeTemplateSelector"/>
+
+        <Style x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Opacity" Value="0.6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Border  Name="opacityAnimated" Width="4.5" Background="Transparent" >
+                            <Grid x:Name="GridRoot" Width="4.5" Background="Transparent">
+                                <Track x:Name="PART_Track"  IsDirectionReversed="False">
+                                    <Track.Thumb>
+                                        <Thumb x:Name="ScrollBarThumb" Background="#50000000" Width="4.5">
+                                            <Thumb.Style>
+                                                <Style TargetType="{x:Type Thumb}">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                                <Grid x:Name="Grid">
+                                                                    <Border x:Name="ScrollBarRectangle" CornerRadius="2.2"
+                                                                             Height="{TemplateBinding Width}" Background="{TemplateBinding Background}" />
+                                                                </Grid>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Thumb.Style>
+                                        </Thumb>
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="ScrollBar.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"  From="0.6" To="1" Duration="0:0:0.2" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="ScrollBar.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"  From="1" To="0.6" Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="Opacity" Value="0.6"/>
+                    <Setter Property="Width" Value="Auto" />
+                    <Setter Property="Height" Value="6" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                <Border  Name="opacityAnimated" Height="4.5" Background="Transparent" >
+                                    <Grid x:Name="GridRoot" Height="4.5" Background="Transparent">
+                                        <Track x:Name="PART_Track"  IsDirectionReversed="False">
+                                            <Track.Thumb>
+                                                <Thumb x:Name="ScrollBarThumb" Background="#50000000" Height="4.5">
+                                                    <Thumb.Style>
+                                                        <Style TargetType="{x:Type Thumb}">
+                                                            <Setter Property="IsTabStop" Value="False"/>
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="{x:Type Thumb}">
+                                                                        <Grid x:Name="Grid">
+                                                                            <Border x:Name="ScrollBarRectangle" CornerRadius="2.2"
+                                                                             Height="{TemplateBinding Width}" Background="{TemplateBinding Background}" />
+                                                                        </Grid>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style>
+                                                    </Thumb.Style>
+                                                </Thumb>
+                                            </Track.Thumb>
+                                        </Track>
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="Orientation" Value="Vertical">
+                    <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+                    <Setter Property="Width" Value="7" />
+                    <Setter Property="Height" Value="Auto" />
+                    <Setter Property="Opacity" Value="0.6"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                <Border  Name="opacityAnimated" Width="4.5" Background="Transparent" >
+                                    <Grid x:Name="GridRoot" Width="4.5" Background="Transparent">
+                                        <Track x:Name="PART_Track" IsDirectionReversed="true" Focusable="false">
+                                            <Track.Thumb>
+                                                <Thumb x:Name="ScrollBarThumb" Background="#50000000" Width="4.5">
+                                                    <Thumb.Style>
+                                                        <Style TargetType="{x:Type Thumb}">
+                                                            <Setter Property="IsTabStop" Value="False"/>
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="{x:Type Thumb}">
+                                                                        <Grid x:Name="Grid">
+                                                                            <Border x:Name="ScrollBarRectangle" CornerRadius="2.2"
+                                                                             Width="{TemplateBinding Width}" Background="{TemplateBinding Background}" />
+                                                                        </Grid>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style>
+                                                    </Thumb.Style>
+                                                </Thumb>
+                                            </Track.Thumb>
+                                            <Track.IncreaseRepeatButton>
+                                                <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false" />
+                                            </Track.IncreaseRepeatButton>
+                                            <Track.DecreaseRepeatButton>
+                                                <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="false" />
+                                            </Track.DecreaseRepeatButton>
+                                        </Track>
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsEnabled" Value="false">
+                                        <Setter TargetName="ScrollBarThumb" Property="Visibility" Value="Collapsed" />
+                                    </Trigger>
+
+                                    <Trigger Property="IsEnabled" Value="true">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetName="opacityAnimated" Storyboard.TargetProperty="(Border.Opacity)" 
+                                                             Duration="0:0:3" From="0" To="10" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                    </Trigger>
+
+                                    <Trigger Property="Orientation" Value="Horizontal">
+                                        <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                            <Setter.Value>
+                                                <RotateTransform Angle="-90" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                            <Setter.Value>
+                                                <RotateTransform Angle="-90" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        
+                                        <Setter TargetName="ScrollBarThumb" Property="Tag" Value="Horizontal" />
+                                        <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand" />
+                                        <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SearchTextBoxExt" TargetType="{x:Type syncfusion:SfTextBoxExt}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type syncfusion:SfTextBoxExt}">
+                        <Border  BorderBrush="#50000000" BorderThickness="1" CornerRadius="10" Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Label x:Name="Watermark_"  Visibility="Hidden"  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="7,-4,0,0" Foreground="#999999" Content="{TemplateBinding Watermark}"/>
+                                <syncfusion:ButtonAdv  SizeMode="Small" Width="25" Height="25" Background="Transparent"
+                                                                       SmallIcon="pack://application:,,,/Resources/Images/MainWindowImages/Header/SearchLogo.png"
+                                                                       Margin="0,0,4,0" Style="{DynamicResource StyleButtonTopPanel}"
+                                                                       VerticalAlignment="Center" HorizontalAlignment="Right" Content="Search">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding ClickButtonSearch}" CommandParameter="{Binding ElementName=TextBoxExt}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </syncfusion:ButtonAdv>
+                                <ScrollViewer Margin="10,3,24,3" x:Name="PART_ContentHost"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="Watermark_" Value="Visible"/>
+                            </MultiTrigger>
+                            <EventTrigger SourceName="PART_ContentHost" RoutedEvent="MouseDown">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="Watermark_" Storyboard.TargetProperty="Foreground.Color" To="Transparent" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="syncfusion:SfTextBoxExt.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="Watermark_" Storyboard.TargetProperty="Foreground.Color" To="#333333" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="syncfusion:SfTextBoxExt.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="Watermark_" Storyboard.TargetProperty="Foreground.Color" To="#999999" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="StyleTokenButtonAdv" TargetType="{x:Type syncfusion:ButtonAdv}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type syncfusion:ButtonAdv}">
+                        <Border x:Name="Border" CornerRadius="11" Background="{TemplateBinding Background}">
+                            <StackPanel Orientation="Horizontal">
+                                <Label x:Name="Watermark_" Margin="1,-4,1,0" Foreground="{TemplateBinding Foreground}" Content="{TemplateBinding Content}"/>
+                                <syncfusion:ButtonAdv x:Name="ButtonAdvClose" SizeMode="Small" Width="10" Height="10" Background="Transparent"
+                                                                       SmallIcon="{TemplateBinding SmallIcon}" Margin="-5,1,3.5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Search">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding ButtonAdvCloseMouseUp}" CommandParameter="{Binding ElementName=Watermark_}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <syncfusion:ButtonAdv.Style>
+                                        <Style TargetType="{x:Type syncfusion:ButtonAdv}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type syncfusion:ButtonAdv}">
+                                                        <Border Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" CornerRadius="100" Background="{TemplateBinding Background}">
+                                                            <Image x:Name="Image" Source="{TemplateBinding SmallIcon}" 
+                                                                                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                                               Width="15"  Margin="1" RenderOptions.BitmapScalingMode="HighQuality" Opacity="0.7"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetProperty="Width" To="12"/>
+                                                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetProperty="Height" To="12"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                                <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetProperty="Width" To="10"/>
+                                                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetProperty="Height" To="10"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </syncfusion:ButtonAdv.Style>
+                                </syncfusion:ButtonAdv>
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="StyleCurrencyTextBox" TargetType="{x:Type syncfusion:CurrencyTextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type syncfusion:CurrencyTextBox}">
+                        <Border Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Margin="0,0,-9,0">
+                                    <Label Grid.Column="0"  Content="{TemplateBinding CurrencySymbol}" Foreground="#80000000"/>
+                                </Border>
+                                <Label Grid.Column="1"  Content="{TemplateBinding Value}"  Foreground="{TemplateBinding Foreground}"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AnimationOpacitySplineSeries" TargetType="{x:Type syncfusion:SplineSeries}">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(syncfusion:SplineSeries.Opacity)"  From="0.6" To="1" Duration="0:0:0.25" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation  Storyboard.TargetProperty="(syncfusion:SplineSeries.Opacity)"  From="1" To="0.5" Duration="0:0:0.25"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="StyleFormCurrencyTextBox" TargetType="{x:Type syncfusion:CurrencyTextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type syncfusion:CurrencyTextBox}">
+                        <Border Background="{TemplateBinding Background}" >
+                            <Grid>
+                                <Label x:Name="CurrencyTextBox" Content="{TemplateBinding Tag}" Foreground="#24262C" FontSize="10"/>
+                                <syncfusion:CurrencyTextBox  Foreground="{TemplateBinding Foreground}" IsEnabled="False" 
+                                                            VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                                                            Background="Transparent" Value="{TemplateBinding Value}" 
+                                                            FontSize="{TemplateBinding FontSize}" CurrencySymbol="$ "
+                                                            FontFamily="Bahnschrift SemiBold" Style="{DynamicResource StyleCurrencyTextBox}"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style  x:Key="StyleButton"  TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Form" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="11" Opacity="0.6">
+                            <Label Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"
+                                                               FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}"
+                                                               FontWeight="{TemplateBinding FontWeight}" Margin="0,-2,0,0" HorizontalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="Border.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Form" Storyboard.TargetProperty="Opacity"  From="0.6" To="1" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Border.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Form" Storyboard.TargetProperty="Opacity"  From="1" To="0.6" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+       
+    </Page.Resources>
+
+    <Grid Margin="10,0,10,0"  SizeChanged="DragButtonForm_SizeChanged">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="170"/>
+                <RowDefinition Height="120" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- !Top -->
+            <Border Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="3*" MinWidth="100" MaxWidth="200" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Expenses" VerticalAlignment="Center" FontSize="22" Foreground="#C7000000"  Grid.Column="0"/>
+                    <syncfusion:SfTextBoxExt x:Name="TextBoxExt" Grid.Column="1" Style="{DynamicResource SearchTextBoxExt}"
+                                         SearchItemPath="Name" AutoCompleteMode="Append" SuggestionMode="StartsWith"
+                                         AutoCompleteSource="{Binding Inquiry}"
+                                         Text="{Binding Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" 
+                                         TextWrapping="Wrap" Watermark="Search" Height="22"
+                                         Background="#40ffffff" Foreground="#444444" >
+                        <syncfusion:SfTextBoxExt.AutoCompleteItemTemplate>
+                            <DataTemplate>
+                                <Border Width="200" Height="200">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}" Margin="5 2"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </syncfusion:SfTextBoxExt.AutoCompleteItemTemplate>
+                    </syncfusion:SfTextBoxExt>
+                </Grid>
+            </Border>
+
+            <!-- !First Panel -->
+            <Border Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" MinWidth="200"/>
+                        <ColumnDefinition Width="7*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- !Left First Panel -->
+                    <Border Grid.Column="0" Margin="0,0,10,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="7.8*"/>
+                                <RowDefinition Height="2.2*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- !Up Panel -->
+                            <Border Grid.Row="0" Background="{DynamicResource ColorMain}" Margin="0,0,0,10" CornerRadius="1">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2.3*"/>
+                                        <RowDefinition Height="2.3*"/>
+                                        <RowDefinition Height="2.3*"/>
+                                        <RowDefinition Height="3*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- !Panel1-->
+                                    <Border Grid.Row="0">
+                                        <Grid>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border Width="20" Height="20" Margin="5,0,0,0" Background="#FFC1CCE6" CornerRadius="6">
+                                                    <Image Source="pack://application:,,,/Resources/Images/ExpensesPageImages/CalendarIcon.png" Opacity="0.6" Width="15" Height="15" Margin="1,1,0,0"/>
+                                                </Border>
+                                                <Label Content="Past Doe" Margin="0,4,0,0" FontSize="12"
+                                                   FontFamily="Roboto" FontWeight="Normal" Foreground="#272931"/>
+                                            </StackPanel>
+                                            <syncfusion:CurrencyTextBox Foreground="#FF31343E" IsEnabled="False" HorizontalAlignment="Right" FontSize="15"
+                                                                Background="Transparent" Value="{Binding DataBinding_.PastDoe, Mode=TwoWay}" 
+                                                                CurrencySymbol="$" FontFamily="Bahnschrift SemiBold" 
+                                                                Style="{DynamicResource StyleCurrencyTextBox}"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- !Panel2-->
+                                    <Border Grid.Row="1">
+                                        <Grid>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border Width="20" Height="20" Margin="5,0,0,0" Background="#FFC1CCE6" CornerRadius="6">
+                                                    <Image Source="pack://application:,,,/Resources/Images/ExpensesPageImages/ListIcon.png" Opacity="0.6" Width="15" Height="15" />
+                                                </Border>
+                                                <Label Content="Schedules" Margin="0,4,0,0" FontSize="12"
+                                                   FontFamily="Roboto" FontWeight="Normal" Foreground="#272931"/>
+                                            </StackPanel>
+                                            <syncfusion:CurrencyTextBox Foreground="#FF31343E" IsEnabled="False" HorizontalAlignment="Right" FontSize="15"
+                                                                Background="Transparent" Value="{Binding DataBinding_.Schedules, Mode=TwoWay}" 
+                                                                CurrencySymbol="$" FontFamily="Bahnschrift SemiBold" 
+                                                                Style="{DynamicResource StyleCurrencyTextBox}"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- !Panel3-->
+                                    <Border  Grid.Row="2">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="9*"/>
+                                                <ColumnDefinition Width="103*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                                                <Border Width="20" Height="20" Margin="5,0,0,0" Background="#FFC1CCE6" CornerRadius="6">
+                                                    <Image Source="pack://application:,,,/Resources/Images/ExpensesPageImages/ClockIcon.png" Opacity="0.6" Width="15" Height="15" Margin="1,1,0,0"/>
+                                                </Border>
+                                                <Label Content="Pending" Margin="0,4,0,0" FontSize="12" 
+                                                   FontFamily="Roboto" FontWeight="Normal" Foreground="#272931"/>
+                                            </StackPanel>
+                                            <syncfusion:CurrencyTextBox Foreground="#FF31343E" IsEnabled="False" HorizontalAlignment="Right" FontSize="15"
+                                                                Background="Transparent" Value="{Binding DataBinding_.Pending, Mode=TwoWay}" 
+                                                                CurrencySymbol="$" FontFamily="Bahnschrift SemiBold" 
+                                                                Style="{DynamicResource StyleCurrencyTextBox}" Cursor="IBeam" Culture="ru-RU" Grid.Column="1" />
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- !Panel4-->
+                                    <Border Grid.Row="3" Margin="5,0,5,5" Background="#FFC1CCE6" BorderBrush="Red" >
+                                        <syncfusion:CurrencyTextBox Foreground="#FF2B2D35" IsEnabled="False" HorizontalAlignment="Right" FontSize="15"
+                                                                Background="Transparent" Value="{Binding DataBinding_.Sum1, Mode=TwoWay}" 
+                                                                CurrencySymbol="$" FontFamily="Bahnschrift SemiBold" 
+                                                                Style="{DynamicResource StyleCurrencyTextBox}" Cursor="IBeam"/>
+                                        <Border.Style>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Style.Triggers>
+                                                    <EventTrigger RoutedEvent="Border.MouseEnter">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <ColorAnimation Storyboard.TargetProperty="Background.Color" To="#A7B6DC" Duration="0:0:0.15" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                    <EventTrigger RoutedEvent="Border.MouseLeave">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <ColorAnimation Storyboard.TargetProperty="Background.Color" To="#C1CCE6" Duration="0:0:0.1" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                    </Border>
+                                </Grid>
+                            </Border>
+
+                            <!-- !Down Panel -->
+                            <Border Grid.Row="1" Background="#F5F5F5" CornerRadius="1">
+                                <Grid>
+                                    <Label Content="Paid" Margin="0,2,0,0" FontSize="19"
+                                                   FontFamily="Roboto" FontWeight="Medium" Foreground="#272931"/>
+                                    <syncfusion:CurrencyTextBox Foreground="#24262C" IsEnabled="False" HorizontalAlignment="Right" FontSize="19"
+                                                                Background="Transparent" Value="{Binding DataBinding_.Paid, Mode=TwoWay}" 
+                                                                CurrencySymbol="$ " FontFamily="Bahnschrift SemiBold" 
+                                                                Style="{DynamicResource StyleCurrencyTextBox}"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!--TODO !!!!        ScrollViewer с syncfusion:SfChart работает не правильно        !!! -->
+                    <!--TODO !!!!    ScrollViewer подстраивается под нынешнюю ширину syncfusion:SfChart !!! -->
+                    <!--TODO !!!!                    По этому он временно выключен а точнее навсегда((( !!!  -->
+                    <!--TODO VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled"-->
+
+                    <!-- !Second Panel -->
+
+                    <ScrollViewer  Grid.Column="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" >
+                        <Border Grid.Column="1" Background="{DynamicResource ColorMain}" MinWidth="420" CornerRadius="1" >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="4*"/>
+                                    <RowDefinition Height="6*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*" MaxWidth="250"/>
+                                        <ColumnDefinition Width="0.1*"/>
+                                        <ColumnDefinition Width="7*" MaxWidth="700" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- ! Left Top Second Panel -->
+                                    <Border Background="#E1E5EE" Margin="10,5,10,5">
+                                        <Grid Margin="1" Background="{DynamicResource ColorMain}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="40"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="pack://application:,,,/Resources/Images/ExpensesPageImages/AvailableIcon.png" 
+                                                    Height="56" HorizontalAlignment="Left" />
+
+                                            <syncfusion:CurrencyTextBox Foreground="#24262C" IsEnabled="False" FontSize="17" 
+                                                                     Background="{DynamicResource ColorMain}" Height="56" Value="{Binding DataBinding_.Available, Mode=TwoWay}" 
+                                                                    Grid.Column="1" Tag="Available" ZeroColor="#F1DCDC"
+                                                                    CurrencySymbol="$ " FontFamily="Bahnschrift SemiBold" 
+                                                                    Style="{DynamicResource StyleFormCurrencyTextBox}" Cursor="IBeam">
+                                            </syncfusion:CurrencyTextBox>
+                                        </Grid>
+                                        <Border.Style>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Style.Triggers>
+                                                    <EventTrigger RoutedEvent="Border.MouseEnter">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <ColorAnimation Storyboard.TargetProperty="Background.Color" To="#CCCFD7" Duration="0:0:0.15" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                    <EventTrigger RoutedEvent="Border.MouseLeave">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <ColorAnimation Storyboard.TargetProperty="Background.Color" To="#E1E5EE" Duration="0:0:0.1" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                    </Border>
+
+                                    <!-- !Top Right Second Panel -->
+                                    <Grid Grid.Column="2" Margin="0,5,10,5" Background="#E1E5EE" >
+
+                                        <!-- !Panel Form Money -->
+                                        <Grid Grid.Row="0" Margin="2,2,2,15" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- ! First Form -->
+                                            <Grid Grid.Column="0" Margin="0,0,1,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Background="#F1DCDC">
+                                                    <Image Source="pack://application:,,,/Resources/Images/ExpensesPageImages/EssentialIcon.png" 
+                                                   Width="15" Height="15" VerticalAlignment="Top" Margin="0,5,0,0" Opacity="0.55"/>
+                                                </Border>
+                                                <syncfusion:CurrencyTextBox Foreground="#24262C" IsEnabled="False" FontSize="14" 
+                                                                     Background="{DynamicResource ColorMain}" Height="42" Value="{Binding DataBinding_.Essential, Mode=TwoWay}" 
+                                                                    Grid.Column="1" Tag="Essential" ZeroColor="#F1DCDC"
+                                                                    CurrencySymbol="$ " FontFamily="Bahnschrift SemiBold" 
+                                                                    Style="{DynamicResource StyleFormCurrencyTextBox}" Cursor="IBeam">
+                                                </syncfusion:CurrencyTextBox>
+                                            </Grid>
+
+                                            <!-- ! Second Form -->
+                                            <Grid Grid.Column="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Background="#FFECD1">
+                                                    <Image Source="pack://application:,,,/Resources/Images/ExpensesPageImages/ImportantIcon.png" 
+                                                   Width="15" Height="15" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                                                </Border>
+                                                <syncfusion:CurrencyTextBox Foreground="#24262C" IsEnabled="False" FontSize="14" 
+                                                                    Background="{DynamicResource ColorMain}" Height="42" Value="{Binding DataBinding_.Important, Mode=TwoWay}" 
+                                                                    Grid.Column="1" Tag="Important" 
+                                                                    CurrencySymbol="$ " FontFamily="Bahnschrift SemiBold" 
+                                                                    Style="{DynamicResource StyleFormCurrencyTextBox}" Cursor="IBeam" Culture="ru-RU">
+                                                </syncfusion:CurrencyTextBox>
+                                            </Grid>
+
+                                            <!-- ! Last Form -->
+                                            <Grid Grid.Column="2" Margin="1,0,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Background="#E8DEF0">
+                                                    <Image Source="pack://application:,,,/Resources/Images/ExpensesPageImages/DiscretionaryIcon.png" 
+                                                   Width="15" Height="15" VerticalAlignment="Top" Margin="0,5,0,0" Opacity="0.5"/>
+                                                </Border>
+                                                <syncfusion:CurrencyTextBox Foreground="#24262C" IsEnabled="False" FontSize="14" 
+                                                                    Background="{DynamicResource ColorMain}" Height="42" Value="{Binding DataBinding_.Discretionary, Mode=TwoWay}" 
+                                                                    Grid.Column="1" Tag="Discretionary" ZeroColor="#E8DEF0"
+                                                                    CurrencySymbol="$ " FontFamily="Bahnschrift SemiBold" 
+                                                                    Style="{DynamicResource StyleFormCurrencyTextBox}" Cursor="IBeam">
+                                                </syncfusion:CurrencyTextBox>
+                                            </Grid>
+                                        </Grid>
+
+                                        <!-- !Form Money -->
+                                        <syncfusion:CurrencyTextBox Foreground="#24262C" IsEnabled="False" Margin="0,0,0,-5"
+                                                            HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                                            Background="Transparent" Value="{Binding DataBinding_.Sum2, Mode=TwoWay}" FontSize="11"
+                                                            CurrencySymbol="$ " FontFamily="Bahnschrift SemiBold" 
+                                                            Style="{DynamicResource StyleCurrencyTextBox}" />
+                                    </Grid>
+                                </Grid>
+
+                                <!-- !Down Panel (Chart) -->
+                                <syncfusion:SfChart Margin="5,0,5,0" Grid.Row="1"  Background="#E1E4EB" MinWidth="410">
+
+                                    <syncfusion:SplineSeries EnableAnimation="True" AnimationDuration="00:00:01" Interior="#3BCD4A" 
+                                                 EnableSegmentDragging="True" Focusable="False" Opacity="0.6"
+                                                 Label="Heights" ItemsSource="{Binding Chart[0]}" StrokeThickness="4"
+                                                 XBindingPath="Date" YBindingPath="Value" ShowTooltip="False"
+                                                 Style="{DynamicResource AnimationOpacitySplineSeries}" />
+
+                                    <syncfusion:SplineSeries EnableAnimation="True" AnimationDuration="00:00:01" Interior="#FFB443"
+                                                 EnableSegmentDragging="True" Focusable="False" Opacity="0.6"
+                                                 Label="Heights" ItemsSource="{Binding Chart[1]}" StrokeThickness="4"
+                                                 XBindingPath="Date" YBindingPath="Value" ShowTooltip="False"
+                                                 Style="{DynamicResource AnimationOpacitySplineSeries}" />
+
+                                    <syncfusion:SplineSeries EnableAnimation="True" AnimationDuration="00:00:01" Interior="#FF6E6E"
+                                                 EnableSegmentDragging="True" Focusable="False" Opacity="0.6"
+                                                 Label="Heights" ItemsSource="{Binding Chart[2]}" StrokeThickness="4"
+                                                 XBindingPath="Date" YBindingPath="Value" ShowTooltip="False" 
+                                                 Style="{DynamicResource AnimationOpacitySplineSeries}" />
+
+                                    <syncfusion:SplineSeries Name="One" EnableAnimation="True" AnimationDuration="00:00:01" Interior="#C781FF"
+                                                 EnableSegmentDragging="True" Focusable="False" Opacity="0.6"
+                                                 Label="Heights" ItemsSource="{Binding Chart[3]}" StrokeThickness="4"
+                                                 XBindingPath="Date" YBindingPath="Value" ShowTooltip="False" 
+                                                 Style="{DynamicResource AnimationOpacitySplineSeries}" />
+
+                                    <syncfusion:SfChart.Resources>
+                                        <Style TargetType="Line" x:Key="lineStyle">
+                                            <Setter Property="Stroke" Value="Transparent"/>
+                                        </Style>
+                                    </syncfusion:SfChart.Resources>
+
+                                    <syncfusion:SfChart.PrimaryAxis>
+                                        <syncfusion:CategoryAxis Visibility="Visible" Background="#F5F5F5"
+                                                     Foreground="#5E5F62" FontSize="7" 
+                                                     MajorGridLineStyle="{StaticResource lineStyle}" 
+                                                     AxisLineStyle="{StaticResource lineStyle}"
+                                                     MajorTickLineStyle="{StaticResource lineStyle}" EdgeLabelsDrawingMode="Hide"
+                                                     ShowTrackBallInfo="True" LabelsPosition="Inside" >
+                                        </syncfusion:CategoryAxis>
+                                    </syncfusion:SfChart.PrimaryAxis>
+
+                                    <syncfusion:SfChart.SecondaryAxis >
+                                        <syncfusion:NumericalAxis Visibility="Collapsed" MajorGridLineStyle="{StaticResource lineStyle}"/>
+                                    </syncfusion:SfChart.SecondaryAxis>
+
+                                    <syncfusion:SfChart.Style>
+                                        <Style TargetType="{x:Type syncfusion:SfChart}">
+                                            <Style.Triggers>
+                                                <EventTrigger RoutedEvent="syncfusion:SplineSeries.MouseEnter">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ColorAnimation Storyboard.TargetProperty="Background.Color" To="#DADCE2" Duration="0:0:0.2" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                                <EventTrigger RoutedEvent="syncfusion:SplineSeries.MouseLeave">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ColorAnimation Storyboard.TargetProperty="Background.Color" To="#E1E4EB" Duration="0:0:0.15" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </syncfusion:SfChart.Style>
+                                </syncfusion:SfChart>
+                            </Grid>
+                        </Border>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <!-- !Second Panel -->
+            <ScrollViewer  Grid.Row="2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" HorizontalContentAlignment="Stretch" >
+                <Border Grid.Row="2"  Background="{DynamicResource ColorMain}" Margin="0,10,0,0" MinWidth="500" CornerRadius="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="6.5*"/>
+                            <RowDefinition Height="3.5*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- !Top Panel -->
+                        <Border Grid.Row="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5.5*"/>
+                                    <RowDefinition Height="4.5*"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- !Top Panel -->
+                                <Grid Grid.Row="0"  Margin="10,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition MinWidth="110" MaxWidth="200"/>
+                                        <ColumnDefinition MinWidth="180" MaxWidth="300"/>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition MinWidth="100" MaxWidth="200"/>
+                                        <ColumnDefinition Width="0.01*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <syncfusion:SplitButtonAdv FontSize="10" Foreground="#00A611" Label="Select Category" BorderBrush="#00A611" Margin="0,0,10,0"
+                                                               Background="Transparent" BorderThickness="1.2" Grid.Column="0" Height="20" HorizontalAlignment="Left">
+                                        <syncfusion:SplitButtonAdv.Style>
+                                            <Style TargetType="{x:Type syncfusion:SplitButtonAdv}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type syncfusion:SplitButtonAdv}">
+                                                            <Border Background="Transparent" CornerRadius="6" BorderThickness="{TemplateBinding BorderThickness}"
+                                                                    BorderBrush="{TemplateBinding BorderBrush}">
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition/>
+                                                                        <ColumnDefinition Width="17"/>
+                                                                    </Grid.ColumnDefinitions>
+
+                                                                    <Label Content="{TemplateBinding Label}" Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" Margin="0,-3,0,-3"/>
+
+                                                                    <Image Grid.Column="1" Source="pack://application:,,,/Resources/Images/ExpensesPageImages/ArrowIconDown.png"
+                                                                           Width="10" Opacity="0.7" Margin="0,2,0,0" x:Name="ArrowIconDown"/>
+
+                                                                    <syncfusion:SplitButtonAdv Grid.Column="1" OpacityMask="Transparent">
+                                                                        <syncfusion:DropDownMenuGroup ItemsSource="{Binding DropDownItems}" >
+                                                                            <syncfusion:DropDownMenuGroup.ItemTemplate>
+                                                                                <DataTemplate>
+                                                                                    <syncfusion:DropDownMenuItem Header="{Binding Name}"/>
+                                                                                </DataTemplate>
+                                                                            </syncfusion:DropDownMenuGroup.ItemTemplate>
+                                                                        </syncfusion:DropDownMenuGroup>
+                                                                    </syncfusion:SplitButtonAdv>
+
+                                                                </Grid>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </syncfusion:SplitButtonAdv.Style>
+                                    </syncfusion:SplitButtonAdv>
+
+                                    <Button Grid.Column="1">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Grid>
+                                                                <Grid.Resources>
+                                                                    <Style x:Key="BorderStyle" TargetType="{x:Type Border}">
+                                                                        <Style.Triggers>
+                                                                            <EventTrigger RoutedEvent="Border.MouseEnter">
+                                                                                <BeginStoryboard>
+                                                                                    <Storyboard>
+                                                                                        <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color" To="#6B6F79" Duration="0:0:0.12" />
+                                                                                    </Storyboard>
+                                                                                </BeginStoryboard>
+                                                                            </EventTrigger>
+                                                                            <EventTrigger RoutedEvent="Border.MouseLeave">
+                                                                                <BeginStoryboard>
+                                                                                    <Storyboard>
+                                                                                        <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color" To="#B0B4BB" Duration="0:0:0.06" />
+                                                                                    </Storyboard>
+                                                                                </BeginStoryboard>
+                                                                            </EventTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Grid.Resources>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition/>
+                                                                    <ColumnDefinition/>
+                                                                    <ColumnDefinition/>
+                                                                    <ColumnDefinition/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Border x:Name="BorderFirst" Height="22" Grid.Column="0" CornerRadius="10,0,0,10" BorderThickness="1,1,0,1" BorderBrush="#B0B4BB" Background="{Binding ObjBackground_[0].ObgBackground, Mode=TwoWay}" Style="{DynamicResource BorderStyle}" >
+                                                                    <Label Content="First" Margin="0,-1,0,0" FontSize="10" Opacity="0.75"  FontFamily="Roboto" FontWeight="Medium" Foreground="#272931" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger  EventName="MouseDown">
+                                                                            <i:InvokeCommandAction Command="{Binding SetBorderColor}"  CommandParameter="{Binding ElementName=BorderFirst}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </Border>
+                                                                <Border  x:Name="BorderSecond"  Height="22" Grid.Column="1"  BorderThickness="0,1,0,1" BorderBrush="#B0B4BB" Background="{Binding ObjBackground_[1].ObgBackground, Mode=TwoWay}" Style="{DynamicResource BorderStyle}">
+                                                                    <Label Content="Second" Margin="0,-1,0,0" FontSize="10" Opacity="0.75"  FontFamily="Roboto" FontWeight="Medium" Foreground="#272931" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                    <i:Interaction.Triggers >
+                                                                        <i:EventTrigger  EventName="MouseDown">
+                                                                            <i:InvokeCommandAction Command="{Binding SetBorderColor}"  CommandParameter="{Binding ElementName=BorderSecond}"/>
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </Border>
+                                                                <Border  x:Name="BorderThird"  Height="22" Grid.Column="2" BorderThickness="0,1,0,1" BorderBrush="#B0B4BB" Background="{Binding ObjBackground_[2].ObgBackground, Mode=TwoWay}" Style="{DynamicResource BorderStyle}">
+                                                                    <Label Content="Third" Margin="0,-1,0,0" FontSize="10" Opacity="0.75"  FontFamily="Roboto" FontWeight="Medium" Foreground="#272931" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                    <i:Interaction.Triggers >
+                                                                        <i:EventTrigger  EventName="MouseDown">
+                                                                            <i:InvokeCommandAction Command="{Binding SetBorderColor}"  CommandParameter="{Binding ElementName=BorderThird}"/>
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </Border>
+                                                                <Border  x:Name="BorderForth"  Height="22" Grid.Column="3" CornerRadius="0,10,10,0" BorderThickness="0,1,1,1" BorderBrush="#B0B4BB" Background="{Binding ObjBackground_[3].ObgBackground, Mode=TwoWay}" Style="{DynamicResource BorderStyle}">
+                                                                    <Label Content="Forth" Margin="0,-1,0,0" FontSize="10" Opacity="0.75"  FontFamily="Roboto" FontWeight="Medium" Foreground="#272931" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                    <i:Interaction.Triggers >
+                                                                        <i:EventTrigger  EventName="MouseDown">
+                                                                            <i:InvokeCommandAction Command="{Binding SetBorderColor}"  CommandParameter="{Binding ElementName=BorderForth}"/>
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </Border>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+
+                                    <Button Grid.Column="2" Content="     15  April" Background="Transparent" Foreground="#00A611" BorderBrush="#00A611" FontFamily="Roboto"
+                                                    Style="{DynamicResource StyleButton}" Height="20" Margin="5,0,5,0" FontSize="10" BorderThickness="1" HorizontalAlignment="Right" />
+
+                                    <Border CornerRadius="100"  Background="Transparent"  Grid.Column="2" Width="11" Height="11" Margin="0,0.5,50,0" HorizontalAlignment="Right" Opacity="0.6" Style="{DynamicResource GreenBorderStyle}">
+                                        <Image x:Name="FirstLeftImage"  Source="pack://application:,,,/Resources/Images/ExpensesPageImages/ArrowIconLeft.png"/>
+                                    </Border>
+
+
+                                    <Label Grid.Column="3" Content="TO" Margin="-4,9,-4,0" FontSize="8" Opacity="0.8"  
+                                       FontFamily="Roboto" FontWeight="Medium" Foreground="#272931"/>
+
+                                    <Button Grid.Column="4" Content="15  May     " Background="Transparent" Foreground="#00A611" BorderBrush="#00A611" FontFamily="Roboto"
+                                                    Style="{DynamicResource StyleButton}" Height="20" Margin="5,0,5,0" FontSize="10" BorderThickness="1"  HorizontalAlignment="Left" />
+
+                                    <Border CornerRadius="100"  Background="Transparent" Grid.Column="4" Width="11" Height="11" Margin="50,0.5,0,0" HorizontalAlignment="Left" Opacity="0.6" Style="{DynamicResource GreenBorderStyle}">
+                                        <Image x:Name="FirstRightImage" Source="pack://application:,,,/Resources/Images/ExpensesPageImages/ArrowIconRight.png"/>
+                                    </Border>
+
+                                    <Button Grid.Column="5" Content="{Binding DataBinding_.Quater, Mode=TwoWay}" Background="Transparent" Foreground="#00A611" BorderBrush="#00A611" FontFamily="Roboto"
+                                            Style="{DynamicResource StyleButton}" Height="20" Margin="5,0,5,0" FontSize="10" BorderThickness="1" />
+
+                                    <Border CornerRadius="100"  Background="Transparent"  Grid.Column="5" Width="11" Height="11" Margin="10,0,0,0" HorizontalAlignment="Left" Opacity="0.6" Style="{DynamicResource GreenBorderStyle}">
+                                        <Image x:Name="SecondLeftImage" Source="pack://application:,,,/Resources/Images/ExpensesPageImages/ArrowIconLeft.png"/>
+                                        <i:Interaction.Triggers  >
+                                            <i:EventTrigger   EventName="MouseDown">
+                                                <i:InvokeCommandAction Command="{Binding ImageButton}"  CommandParameter="{Binding ElementName=SecondLeftImage}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Border>
+
+                                    <Border CornerRadius="100"  Background="Transparent" Grid.Column="5"  Width="11" Height="11" Margin="0,0,10,0" HorizontalAlignment="Right" Opacity="0.6" Style="{DynamicResource GreenBorderStyle}">
+                                        <Image x:Name="SecondRightImage" Source="pack://application:,,,/Resources/Images/ExpensesPageImages/ArrowIconRight.png"/>
+                                        <i:Interaction.Triggers  >
+                                            <i:EventTrigger EventName="MouseDown">
+                                                <i:InvokeCommandAction Command="{Binding ImageButton}" CommandParameter="{Binding ElementName=SecondRightImage}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Border>
+
+                                    <Button Grid.Column="7" Content="Apply" Background="#00A611" Foreground="White" FontFamily="Roboto" HorizontalAlignment="Right"
+                                                    Style="{DynamicResource StyleButton}" BorderThickness="0" Height="20" Width="70" Margin="5,0,5,0" FontSize="10"/>
+
+                                    <Button Grid.Column="8" Content="Advance Filter" Background="Transparent" Foreground="#00A611" FontFamily="Roboto" HorizontalAlignment="Right"
+                                              Style="{DynamicResource StyleButton}" BorderThickness="0" Height="20"  Margin="0,0,15,0" FontSize="12"/>
+
+                                    <Grid.Resources>
+                                        <Style x:Key="GreenBorderStyle" TargetType="{x:Type Border}">
+                                            <Style.Triggers>
+                                                <EventTrigger RoutedEvent="Border.MouseEnter">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetProperty="Width" To="13.5"/>
+                                                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetProperty="Height" To="13.5"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                                <EventTrigger RoutedEvent="Border.MouseLeave">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetProperty="Width" To="11"/>
+                                                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetProperty="Height" To="11"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Resources>
+                                </Grid>
+
+                                <!-- !Bottom Panel -->
+                                <Grid Grid.Row="1" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="29*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                                        <Label Content="Tags: " Margin="8,0,0,0" FontSize="12" Opacity="0.8"  
+                                       FontFamily="Roboto" FontWeight="Medium" Foreground="#272931"/>
+
+                                        <syncfusion:ButtonAdv Content="{Binding NameTagsButtonAdv[0]}" SizeMode="Normal" Height="20" Background="#BEF0C4" Foreground="#3E9046" Margin="2,0,0,0"
+                                                          Style="{DynamicResource StyleTokenButtonAdv}" SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/ChekMarkIcon.png"/>
+                                        <syncfusion:ButtonAdv Content="{Binding NameTagsButtonAdv[1]}" SizeMode="Normal" Height="20" Background="#BEF0C4" Foreground="#3E9046" Margin="4,0,0,0"
+                                                          Style="{DynamicResource StyleTokenButtonAdv}" SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/ChekMarkIcon.png"/>
+                                        <syncfusion:ButtonAdv Content="{Binding NameTagsButtonAdv[2]}" SizeMode="Normal" Height="20" Background="#BEF0C4" Foreground="#3E9046" Margin="4,0,0,0"
+                                                          Style="{DynamicResource StyleTokenButtonAdv}" SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/ChekMarkIcon.png"/>
+                                    </StackPanel>
+                                    <Button Content="Hide Filter" Background="Transparent" Foreground="#00A611" FontFamily="Roboto"  
+                                    Style="{DynamicResource StyleButton}" BorderThickness="0" Height="20" HorizontalAlignment="Right" Margin="0,0,15,0" FontSize="12" Grid.Column="1"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <!-- !Bottom Panel -->
+                        <Border Grid.Row="1" BorderBrush="#BFC9E2" BorderThickness="0,1,0,0">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <syncfusion:ButtonAdv SizeMode="Small" Width="20" Height="20" Background="Transparent" Opacity="0.7"
+                                                      SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/PlusIcon.png"
+                                                      Margin="15,1,14,0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction Command="{Binding AddTokenButtonAdvMouseUp}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <syncfusion:ButtonAdv.Style>
+                                            <Style TargetType="{x:Type syncfusion:ButtonAdv}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type syncfusion:ButtonAdv}">
+                                                            <Border Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" CornerRadius="100" Background="{TemplateBinding Background}">
+                                                                <Image x:Name="Image" Source="{TemplateBinding SmallIcon}"  VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                   Width="15"  Margin="1" RenderOptions.BitmapScalingMode="HighQuality" Opacity="0.7"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(syncfusion:ButtonAdv.Opacity)"  From="0.7" To="1" Duration="0:0:0.2" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                    <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(syncfusion:ButtonAdv.Opacity)"  From="1" To="0.7" Duration="0:0:0.1" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </syncfusion:ButtonAdv.Style>
+                                    </syncfusion:ButtonAdv>
+
+                                    <syncfusion:ButtonAdv Content="{Binding NameTokenButtonAdv[0]}" SizeMode="Normal" Height="20" Background="#FFCED6E9" Foreground="#FF5A5D64" Margin="4,0,0,0"
+                                                      Visibility="{Binding visibilityObj[0].Visibility_, Mode=TwoWay}" Style="{DynamicResource StyleTokenButtonAdv}" SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/XIcon.png"/>
+                                    <syncfusion:ButtonAdv Content="{Binding NameTokenButtonAdv[1]}" SizeMode="Normal" Height="20" Background="#FFCED6E9" Foreground="#FF5A5D64" Margin="4,0,0,0"
+                                                      Visibility="{Binding visibilityObj[1].Visibility_, Mode=TwoWay}" Style="{DynamicResource StyleTokenButtonAdv}" SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/XIcon.png"/>
+                                    <syncfusion:ButtonAdv Content="{Binding NameTokenButtonAdv[2]}" SizeMode="Normal" Height="20" Background="#FFCED6E9" Foreground="#FF5A5D64" Margin="4,0,0,0"
+                                                      Visibility="{Binding visibilityObj[2].Visibility_, Mode=TwoWay}" Style="{DynamicResource StyleTokenButtonAdv}" SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/XIcon.png"/>
+                                    <syncfusion:ButtonAdv Content="{Binding NameTokenButtonAdv[3]}" SizeMode="Normal" Height="20" Background="#FFCED6E9" Foreground="#FF5A5D64" Margin="4,0,0,0"
+                                                      Visibility="{Binding visibilityObj[3].Visibility_, Mode=TwoWay}" Style="{DynamicResource StyleTokenButtonAdv}" SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/XIcon.png"/>
+                                    <syncfusion:ButtonAdv Content="{Binding NameTokenButtonAdv[4]}" SizeMode="Normal" Height="20" Background="#FFCED6E9" Foreground="#FF5A5D64" Margin="4,0,0,0"
+                                                      Visibility="{Binding visibilityObj[4].Visibility_, Mode=TwoWay}" Style="{DynamicResource StyleTokenButtonAdv}" SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/XIcon.png"/>
+                                    <syncfusion:ButtonAdv Content="{Binding NameTokenButtonAdv[5]}" SizeMode="Normal" Height="20" Background="#FFCED6E9" Foreground="#FF5A5D64" Margin="4,0,0,0"
+                                                      Visibility="{Binding visibilityObj[5].Visibility_, Mode=TwoWay}" Style="{DynamicResource StyleTokenButtonAdv}" SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/XIcon.png"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </ScrollViewer>
+            <!-- !Third Panel -->
+            <ScrollViewer  Grid.Row="3" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Margin="0,10,0,10"  >
+                <Border Grid.Row="3"  Background="{DynamicResource ColorMain}" CornerRadius="1">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left">
+                            <StackPanel.Resources>
+                                <Style x:Key="StyleButtonAdvDataGrid" TargetType="{x:Type syncfusion:ButtonAdv}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type syncfusion:ButtonAdv}">
+                                                <Border x:Name="Border" CornerRadius="9" Background="{TemplateBinding Background}">
+                                                    <StackPanel Orientation="Horizontal" Margin="0,-1,0,-1">
+                                                        <Label Content="{TemplateBinding Label}" Margin="1,-4,1,0" Foreground="{TemplateBinding Foreground}"/>
+                                                        <Image Source="{TemplateBinding SmallIcon}" Margin="0,4,4,4" Opacity="0.6"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </StackPanel.Resources>
+                            <syncfusion:ButtonAdv  SizeMode="Normal" Label="Paid" Height="18" Background="#BEF0C4" Foreground="#3E9046" Margin="20,0,0,0" SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/ChekMarkIcon.png" Style="{DynamicResource StyleButtonAdvDataGrid}" />
+                            <syncfusion:ButtonAdv SizeMode="Normal" Label="Paid" Height="18" Background="#BFC9E2" Foreground="#59647F" Margin="10,0,0,0" SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/CalendarIcon.png" Style="{DynamicResource StyleButtonAdvDataGrid}" />
+                            <syncfusion:ButtonAdv SizeMode="Normal" Label="Paid" Height="18" Background="#BFC9E2" Foreground="#59647F" Margin="10,0,0,0" SmallIcon="pack://application:,,,/Resources/Images/ExpensesPageImages/ClockIcon.png" Style="{DynamicResource StyleButtonAdvDataGrid}" />
+                        </StackPanel>
+                        
+                        <syncfusion:SfDataGrid x:Name="dataGrid" Margin="0,25,0,0" RowHeight="30" MinWidth="700" SelectionMode="Extended" 
+                                           BorderThickness="0"  IsReadOnly="True"  ItemsSource="{Binding DataGridModel_}"
+                                           ColumnSizer="Star" AutoGenerateColumns="False" AllowResizingColumns="True" >
+                        <syncfusion:SfDataGrid.Resources>
+
+                            <Style TargetType="syncfusion:GridCell">
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                            </Style>
+                            <Style TargetType="syncfusion:GridViewDefinition">
+                                <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+                            </Style>
+
+                            <Style TargetType="syncfusion:HeaderRowControl">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="syncfusion:HeaderRowControl">
+                                            <Border BorderBrush="#96A3C6" BorderThickness="0,1,0,1">
+                                                <Grid Margin="50,0,0,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Margin="0,-3, 0,-3" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f" Content="Expense Tile" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
+                                                    <Label Margin="0,-3, 0,-3" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f" Content="Category" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"/>
+                                                    <Label Margin="0,-3, 0,-3" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f" Content="Type" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2"/>
+                                                    <Label Margin="0,-3, 0,-3" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f" Content="Payee" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3"/>
+                                                    <Label Margin="0,-3, 0,-3" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f" Content="Account" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="4"/>
+                                                    <Label Margin="0,-3, 0,-3" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f" Content="Status" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="5"/>
+                                                    <Label Margin="0,-3, 0,-3" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f" Content="PaidYTD" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="6"/>
+                                                    <Label Margin="0,-3, 0,-3" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f" Content="LastPaid" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="7"/>
+                                                    <Label Margin="0,-3, 0,-3" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f" Content="AmountPaid" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="8"/>
+                                                    <Label Margin="0,-3, 0,-3" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f" Content="DueDate" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="9"/>
+                                                </Grid>
+                                            </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </syncfusion:SfDataGrid.Resources>
+                            <syncfusion:SfDataGrid.DetailsViewDefinition>
+
+                                <syncfusion:TemplateViewDefinition Height="30">
+                                    <syncfusion:TemplateViewDefinition.RowTemplate>
+                                        <DataTemplate >
+                                            
+                                            <Grid Background="#FAFBFF" Margin="-20,-5,-5,-5" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="30"/>
+                                                <ColumnDefinition Width="50"/>
+                                            </Grid.ColumnDefinitions>
+                                                <Label Content="{Binding Data.Created}" Grid.Column="0" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f"/>
+                                                <Label Content="{Binding Data.LastChange}"  Grid.Column="1" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f"/>
+                                                <Label Content="{Binding Data.Tag}"  Grid.Column="2" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f"/>
+                                                <Label Content="{Binding Data.Resourses}"  Grid.Column="3" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f"/>
+                                                <Label Content="{Binding Data.Note}"  Grid.Column="4" FontFamily="Roboto" FontWeight="Medium" Foreground="#3f3f3f"/>
+                                                <Image Grid.Column="5" Source="pack://application:,,,/Resources/Images/ExpensesPageImages/DeleteIcon.png" Width="20" Height="20" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                                <Image Grid.Column="6" Source="pack://application:,,,/Resources/Images/ExpensesPageImages/NoteIcon.png" Width="20" Height="20"  Margin="10,0,0,0"  HorizontalAlignment="Left"/>
+                                            </Grid>
+                                    </DataTemplate>
+                                    </syncfusion:TemplateViewDefinition.RowTemplate>
+                                </syncfusion:TemplateViewDefinition>
+
+
+                            </syncfusion:SfDataGrid.DetailsViewDefinition>
+                            <syncfusion:SfDataGrid.Columns>
+                                <syncfusion:GridCheckBoxSelectorColumn MappingName="SelectorColumn" Width="26">
+                                    <syncfusion:GridCheckBoxSelectorColumn.CellStyle>
+                                        <Style TargetType="syncfusion:GridCell">
+                                            <Style.Resources>
+                                                <Style TargetType="CheckBox">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="CheckBox">
+                                                            <Border Background="{TemplateBinding Background}" 
+                                                                BorderBrush="#BFC9E2" BorderThickness="1"
+                                                                Width="17" Height="17" CornerRadius="5">
+                                                                <Image Source="pack://application:,,,/Resources/Images/ExpensesPageImages/CheckMarkIcon.png"/>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsChecked" Value="True">
+                                                                    <Setter Property="Background" Value="#57B660"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Style.Resources>
+                                    </Style>
+                                </syncfusion:GridCheckBoxSelectorColumn.CellStyle>
+                                <syncfusion:GridCheckBoxSelectorColumn.HeaderStyle>
+                                    <Style TargetType="syncfusion:GridHeaderCellControl">
+                                        <Style.Resources>
+                                            <Style TargetType="CheckBox">
+                                                <Setter Property="Background" Value="#57B660"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="CheckBox">
+                                                            <Border Background="{TemplateBinding Background}" 
+                                                                Width="17" Height="17" CornerRadius="5" Margin="-3">
+                                                                <Image Source="pack://application:,,,/Resources/Images/ExpensesPageImages/MinusIcon.png"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Style.Resources>
+                                    </Style>
+                                </syncfusion:GridCheckBoxSelectorColumn.HeaderStyle>
+                            </syncfusion:GridCheckBoxSelectorColumn>
+                            <syncfusion:GridTextColumn MappingName="ExpenseTile">
+                                <syncfusion:GridTextColumn.CellStyle >
+                                    <Style TargetType="syncfusion:GridCell">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="syncfusion:GridCell">
+                                                    <Border BorderBrush="#96A3C6" BorderThickness="0,0.5,0,0.5" Margin="0,-0.5,0,0.5">
+                                                        <Label Content="{Binding ExpenseTile}" Foreground="#3f3f3f" FontFamily="Roboto" Margin="0,2,0,0" FontWeight="Normal" HorizontalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </syncfusion:GridTextColumn.CellStyle>
+                            </syncfusion:GridTextColumn>
+
+                            <syncfusion:GridTextColumn MappingName="Category">
+                                <syncfusion:GridTextColumn.CellStyle>
+                                    <Style TargetType="syncfusion:GridCell">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="syncfusion:GridCell">
+                                                    <Border BorderBrush="#96A3C6" BorderThickness="0,0.5,0,0.5" Margin="0,-0.5,0,0.5">
+                                                        <Label Content="{Binding Category}" Foreground="#3f3f3f" FontFamily="Roboto" Margin="0,2,0,0" FontWeight="Normal" HorizontalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </syncfusion:GridTextColumn.CellStyle>
+                            </syncfusion:GridTextColumn>
+
+                            <syncfusion:GridTextColumn MappingName="Type" CellTemplateSelector="{DynamicResource  ResourceKey=TypeTemplateSelector}"/>
+                            <!-- Todo!!!  CellTemplateSelector="{DynamicResource  ResourceKey=TypeTemplateSelector}"-->
+
+                            <syncfusion:GridTextColumn MappingName="Payee">
+                                <syncfusion:GridTextColumn.CellStyle>
+                                    <Style TargetType="syncfusion:GridCell">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="syncfusion:GridCell">
+                                                    <Border BorderBrush="#96A3C6" BorderThickness="0,0.5,0,0.5" Margin="0,-0.5,0,0.5">
+                                                        <Label Content="{Binding Payee}" Foreground="#00A611" FontFamily="Roboto" Margin="0,2,0,0" FontWeight="Normal" HorizontalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </syncfusion:GridTextColumn.CellStyle>
+                            </syncfusion:GridTextColumn>
+
+                            <syncfusion:GridTextColumn MappingName="Account">
+                                <syncfusion:GridTextColumn.CellStyle>
+                                    <Style TargetType="syncfusion:GridCell">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="syncfusion:GridCell">
+                                                    <Border BorderBrush="#96A3C6" BorderThickness="0,0.5,0,0.5" Margin="0,-0.5,0,0.5">
+                                                        <Label Content="{Binding Account}" Foreground="#00A611" FontFamily="Roboto" Margin="0,2,0,0" FontWeight="Normal" HorizontalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </syncfusion:GridTextColumn.CellStyle>
+                            </syncfusion:GridTextColumn>
+
+                            <syncfusion:GridTextColumn MappingName="Status" CellTemplateSelector="{DynamicResource  ResourceKey=StatusTemplateSelector}"/>
+                            <!-- Todo!!!  CellTemplateSelector="{DynamicResource  ResourceKey=StatusTemplateSelector}"-->
+
+                            <syncfusion:GridNumericColumn MappingName="PaidYTD">
+                                <syncfusion:GridNumericColumn.CellStyle>
+                                    <Style TargetType="syncfusion:GridCell">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="syncfusion:GridCell">
+                                                    <Border BorderBrush="#96A3C6" BorderThickness="0,0.5,0,0.5" Margin="0,-0.5,0,0.5">
+                                                        <Grid HorizontalAlignment="Center" Margin="7,2,0,0" >
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Label Grid.Row="0" Content="$" Foreground="#96A3C6" FontFamily="Roboto" Margin="-9,0,0,0" FontWeight="Medium"/>
+                                                            <Label Grid.Row="1" Content="{Binding PaidYTD}" Foreground="#3f3f3f" FontFamily="Roboto" FontWeight="Normal"/>
+                                                        </Grid>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </syncfusion:GridNumericColumn.CellStyle>
+                            </syncfusion:GridNumericColumn>
+
+                            <syncfusion:GridNumericColumn MappingName="LastPaid">
+                                <syncfusion:GridNumericColumn.CellStyle>
+                                    <Style TargetType="syncfusion:GridCell">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="syncfusion:GridCell">
+                                                    <Border BorderBrush="#96A3C6" BorderThickness="0,0.5,0,0.5" Margin="0,-0.5,0,0.5">
+                                                        <Grid HorizontalAlignment="Center" Margin="7,2,0,0" >
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Label Grid.Row="0" Content="$" Foreground="#96A3C6" FontFamily="Roboto" Margin="-9,0,0,0" FontWeight="Medium"/>
+                                                            <Label Grid.Row="1" Content="{Binding LastPaid}" Foreground="#3f3f3f" FontFamily="Roboto" FontWeight="Normal"/>
+                                                        </Grid>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </syncfusion:GridNumericColumn.CellStyle>
+                            </syncfusion:GridNumericColumn>
+
+                            <syncfusion:GridNumericColumn MappingName="AmountPaid">
+                                <syncfusion:GridNumericColumn.CellStyle>
+                                    <Style TargetType="syncfusion:GridCell">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="syncfusion:GridCell">
+                                                    <Border BorderBrush="#96A3C6" BorderThickness="0,0.5,0,0.5" Margin="0,-0.5,0,0.5">
+                                                        <Grid HorizontalAlignment="Center" Margin="7,2,0,0" >
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Label Grid.Row="0" Content="$" Foreground="#96A3C6" FontFamily="Roboto" Margin="-9,0,0,0" FontWeight="Medium"/>
+                                                            <Label Grid.Row="1" Content="{Binding AmountPaid}" Foreground="#3f3f3f" FontFamily="Roboto" FontWeight="Normal"/>
+                                                        </Grid>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </syncfusion:GridNumericColumn.CellStyle>
+                            </syncfusion:GridNumericColumn>
+
+                            <syncfusion:GridTextColumn MappingName="DueDate"  CellTemplateSelector="{DynamicResource  ResourceKey=DueDateTemplateSelector}"/>
+                            <!-- Todo!!!  CellTemplateSelector="{DynamicResource  ResourceKey=DueDateTemplateSelector}"-->
+                        </syncfusion:SfDataGrid.Columns>
+                    </syncfusion:SfDataGrid>
+                    </Grid>
+                </Border>
+            </ScrollViewer>
+        </Grid>
+
+
+        <!-- !DragButton -->
+        <Grid AllowDrop="False" Height="70"  Width="70" x:Name="DragButtonForm"
+              VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Grid AllowDrop="False" ShowGridLines="True" Height="70"  Width="70"/>
+            <Button Height="60" Width="60" Background="#26B637"
+                    BorderBrush="#3820B931" Name="DragButton" BorderThickness="7" 
+                    PreviewMouseUp="DragButton_PreviewMouseUp" 
+                    PreviewMouseRightButtonDown="DragButton_PreviewMouseRightButtonDown"
+                    PreviewMouseMove="DragButton_PreviewMouseMove">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="Border" CornerRadius="100" Background="{TemplateBinding Background}"
+                                        BorderThickness="{TemplateBinding BorderThickness}" 
+                                        BorderBrush="{TemplateBinding BorderBrush}">
+                                        <Image Source="pack://application:,,,/Resources/Images/ExpensesPageImages/DollarIcon.png" 
+                                               Margin="10" Opacity="0.6"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <EventTrigger RoutedEvent="Border.MouseEnter">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ThicknessAnimation Storyboard.TargetProperty="BorderThickness"
+                                                                    Duration="0:0:0.3"  From="7" To="9.5" >
+                                                        <ThicknessAnimation.EasingFunction>
+                                                            <PowerEase Power="2" />
+                                                        </ThicknessAnimation.EasingFunction>
+                                                    </ThicknessAnimation>
+                                                    <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetProperty="Width" To="65" >
+                                                        <DoubleAnimation.EasingFunction>
+                                                            <PowerEase Power="2" />
+                                                        </DoubleAnimation.EasingFunction>
+                                                    </DoubleAnimation>
+                                                    <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetProperty="Height" To="65" >
+                                                        <DoubleAnimation.EasingFunction>
+                                                            <PowerEase Power="2" />
+                                                        </DoubleAnimation.EasingFunction>
+                                                    </DoubleAnimation>
+                                                    <ColorAnimation Storyboard.TargetProperty="Background.Color" To="#27AF2F" Duration="0:0:0.2" >
+                                                        <ColorAnimation.EasingFunction>
+                                                            <PowerEase Power="1" />
+                                                        </ColorAnimation.EasingFunction>
+                                                    </ColorAnimation>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                        <EventTrigger RoutedEvent="Border.MouseLeave">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <Storyboard>
+                                                        <ThicknessAnimation Storyboard.TargetProperty="BorderThickness"
+                                                                    Duration="0:0:0.3"  From="9.5" To="7">
+                                                            <ThicknessAnimation.EasingFunction>
+                                                                <PowerEase Power="2" />
+                                                            </ThicknessAnimation.EasingFunction>
+                                                        </ThicknessAnimation>
+                                                        <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetProperty="Width" To="60">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <PowerEase Power="2" />
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                        <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetProperty="Height" To="60">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <PowerEase Power="2" />
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                        <ColorAnimation Storyboard.TargetProperty="Background.Color" To="#26B637" Duration="0:0:0.2" >
+                                                            <ColorAnimation.EasingFunction>
+                                                                <PowerEase Power="1" />
+                                                            </ColorAnimation.EasingFunction>
+                                                        </ColorAnimation>
+                                                    </Storyboard>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+    </Grid>
+</Page>
